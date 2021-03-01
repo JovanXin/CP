@@ -30,11 +30,15 @@ while SHADOW_HEALTH > 0 and dead < player_count:
         if player:
             if player["alive"] == True:
                 if shadow_position - i < closest_lower and shadow_position - i > 0:
-                    closest_lower = i
+                    closest_lower = i + 1
                 elif i - shadow_position < closest_higher and i - shadow_position > 0:
-                    closest_higher = i
+                    closest_higher = i + 1
 
-    players[closest_higher - 1]["health"] -= shadow_damage
+    print(f"{closest_higher=}")
+    print(f"{closest_lower=}")
+    print(f"{max_pos=}")
+
+    players[closest_higher]["health"] -= shadow_damage
     players[closest_lower]["health"] -= shadow_damage
 
     if players[closest_higher]["health"] <= 0:
@@ -52,13 +56,15 @@ while SHADOW_HEALTH > 0 and dead < player_count:
 
     SHADOW_HEALTH -= total_dmg
 
+    print(f"{SHADOW_HEALTH=}")
+    print(f"{players=}")
 
 if SHADOW_HEALTH < 0:
     living_players = []
     for i, player in enumerate(players):
         if player:
             if player["health"] > 0:
-                living_players.append(str(i - 1))
+                living_players.append(str(i))
 
     print(f"We win! Players alive: {' '.join(living_players)}")
 else:
