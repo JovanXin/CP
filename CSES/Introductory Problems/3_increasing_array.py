@@ -1,2 +1,12 @@
 arr_size = int(input())
-arr = list(map(int, input().split()))
+nums = map(int, input().split())
+
+curr_max = 0
+min = 0
+
+for num in nums:
+    print(num)
+    mx = max(num, curr_max)
+    min += mx - num
+
+print(min)
