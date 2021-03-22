@@ -28,5 +28,8 @@ def knapsack(weights, values, max_weight):
     # for row in dp:
     #     print(row)
 
+    curr_row = dp[max_weight + 1][len(values) + 1]
+    print(curr_row)
+
 
 knapsack([1, 5, 2, 4], [3, 2, 6, 4], 20)
