@@ -1,12 +1,12 @@
 arr_size = int(input())
-nums = map(int, input().split())
+nums = list(map(int, input().split()))
 
-curr_max = 0
-min = 0
+needed = 0
 
-for num in nums:
-    print(num)
-    mx = max(num, curr_max)
-    min += mx - num
+for i in range(len(nums) - 1):
+    if nums[i] > nums[i + 1]:
+        needed += nums[i] - nums[i + 1]
+        nums[i + 1] = nums[i]
 
-print(min)
+
+print(needed)
