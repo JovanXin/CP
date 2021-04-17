@@ -11,7 +11,7 @@ def unoptimized(num):
 
 
 def optimized(num):
-    return 3 * (num ^ (num - 1))
+    return
 
 
 num = int(input())
