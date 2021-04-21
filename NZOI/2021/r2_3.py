@@ -1,3 +1,14 @@
+"""
+Another way to calculate, treat dots as duck debts
+
+duck_debt = 0
+if the number of r+p+d = duck_debt:
+    break
+
+This reduces the issue of calculating nearest index/finding which duck to use.
+"""
+
+
 possible_days = 0
 days = int(input())
 r, p, d, g = map(int, input().split())

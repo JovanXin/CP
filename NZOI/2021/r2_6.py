@@ -1,3 +1,10 @@
+"""
+Oversimplified problem assumption that ducks would teleport xi -> xf and yi -> yf
+
+Needed to simulate ACTUAL ROUTES instead of just blindly assuming it'd collide
+with ducks within width and height indexes, wheras it could go up and OVER some
+ducks within that width between xi -> xf. 
+"""
 h, w = map(int, input().split())
 num_ducks = int(input())
 
