@@ -1,4 +1,4 @@
-def get_primes(n):
+def prime_sieve(n):
     sieve = [True] * n
     for i in range(3, int(n ** 0.5) + 1, 2):
         if sieve[i]:
@@ -6,5 +6,5 @@ def get_primes(n):
     return [2] + [i for i in range(3, n, 2) if sieve[i]]
 
 
-primes = get_primes(1000000000)
+primes = prime_sieve(1000000000)
 print(primes)
