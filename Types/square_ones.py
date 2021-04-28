@@ -1,3 +1,6 @@
+# Can also be modified to get max size of grids of only one type
+
+
 class Solution:
     def solve(self, matrix):
         width = len(matrix)
