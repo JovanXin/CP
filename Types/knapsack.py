@@ -1,35 +1,42 @@
-# Classic knapsack problem
+from typing import List
 
 
-def knapsack(weights, values, max_weight):
-    # 2d array of sides items/knapsack capacities
-    dp = [[None for j in range(max_weight + 1)] for i in range(len(values) + 1)]
+def knapsack(weights: List[int], values: List[int], max_weight: int):
+    dp = [[0] * (max_weight + 1) for _ in range(len(values) + 1)]
 
-    num_items = len(weights)
+    # Implementation of tabulation
+    for i in range(1, len(values) + 1):
+        value = values[i - 1]
+        weight = weights[i - 1]
 
-    for i in range(num_items):
-        weight = weights[i]
-        value = values[i]
+        for j in range(1, max_weight + 1):
+            dp[i][j] = dp[i - 1][j]
 
-        for size in range(max_weight):
-            # The row directly above
-            dp[i][size] = dp[i - 1][size]
+            # If the item weighs less than the capacity avaliable
+            if j >= weight:
+                # Current dp value is max(row above not including curr item, row above - weight to find optimum without current item weight plus extra value current item gives)
+                dp[i][j] = max(dp[i - 1][j - weight] + value, dp[i][j])
 
-            # Not clear on this bit yet, checking diagonal
+    # Backtrack through to find the knapsack items used
+    y, x = len(values), max_weight
 
-            # If the weight fits inside the subproblems knapsack
-            # AND the row above (max value/remaining weight after including current item) plus current value is greater than current value (of the row directly above)..
-            if size >= weight and dp[i - 1][size - weight] + value > dp[i][size]:
-                # Set current index to the max val with remaining weight plus the value of the current item
-                dp[i][size] = dp[i - 1][size - weight] + value
+    used_values = []
+    # While not at origin
+    while dp[y][x] != dp[0][0]:
+        # If we have taken current item (since it is not same as item in row above)
+        if dp[y][x] > dp[y - 1][x]:
+            used_values.append(y)
+            y -= 1
+            x -= weights[y]
+        else:
+            y -= 1
 
-    # Still need to backtrack to grab the items
-
-    # for row in dp:
-    #     print(row)
-
-    curr_row = dp[max_weight + 1][len(values) + 1]
-    print(curr_row)
+    return used_values
 
 
-knapsack([1, 5, 2, 4], [3, 2, 6, 4], 20)
+# Testing
+weights = [3, 1, 3, 4, 2]
+values = [2, 2, 4, 5, 3]
+
+used_vals = knapsack(weights, values, 7)
+print(used_vals)  # Items 5, 4 and 2 should be optimally used
