@@ -1,3 +1,7 @@
+"""
+My crucial error was that I used mean instead of the medians to try calculate my final answer...
+"""
+
 import math
 
 ducks = []
