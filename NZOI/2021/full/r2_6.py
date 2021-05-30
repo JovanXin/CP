@@ -1,9 +1,39 @@
+import bisect
+
+
+# Full binary search unneeded
+def binary_search(arr, axis, step):
+    # print("FUNCTION CALLED")
+    start = 0
+    end = len(arr)
+    middle = start + (end - start) // 2
+
+    while start <= end:
+        middle = start + (end - start) // 2
+        # print(f"start: {start}, mid: {middle}, end: {end}")
+        if middle >= len(arr):
+            return False
+        if arr[middle] >= axis:
+            if arr[middle] <= axis + step:
+                # print(f"index {middle} is {arr[middle]} and is lte  {axis+step}")
+                return True
+            else:
+                end = middle - 1
+        else:
+            start = middle + 1
+    return False
+
+
+# print(binary_search([1, 5, 6, 36, 245, 2356, 23512], 23513, 23513))
+
 h, w = map(int, input().split())
 n = int(input())
+message = ""
 
 grid = [[0] * h] * w
 
-duck_locations = []
+columns = {}
+rows = {}
 
 for i in range(n):
     [strides, *steps] = map(int, input().split())
@@ -14,27 +44,40 @@ for i in range(n):
 
     for step in steps:
         if up:
-            for other_x, other_y in duck_locations:
-                if other_x == x:
-                    if other_y >= y and other_y <= y + step:
+            if x in columns and not collusion:
+                position = bisect.bisect_left(columns[x], y)
+                if position != len(columns[x]):
+                    val = columns[x][position]
+                    if val >= y and val <= y + step:
                         collusion = True
 
             y += step
 
         else:
-            for location in duck_locations:
-                if other_y == y:
-                    if other_x >= x and other_x <= x + step:
+            if y in rows and not collusion:
+                position = bisect.bisect_left(rows[y], x)
+                if position != len(rows[y]):
+                    val = rows[y][position]
+                    if val >= x and val <= x + step:
                         collusion = True
-            x += step
 
-        up = not up
+            y += step
 
-    duck_locations.append((x, y))
+        up = not up  # Switches the direction the duck travels in
+
+    # Should insert in asecending order
+
+    if x not in columns:
+        columns[x] = []
+    if y not in rows:
+        rows[y] = []
+
+    bisect.insort(columns[x], y)
+    bisect.insort(rows[y], x)
 
     if collusion:
-        print("OUCH")
+        message += "OUCH\n"
     else:
-        print("smooth swimming")
+        message += "smooth swimming\n"
 
-# If we can insert in sorted order, then the 'x' and the 'y' would be able to be checked faster
+print(message)
