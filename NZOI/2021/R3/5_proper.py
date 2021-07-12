@@ -3,7 +3,7 @@
 Issues faced
 1) Initially, was storing all competitiors in dictionary. Too memory intensive.
 2) Linear search through the changed list was too slow -> fixed with bisect module
-3) Memory Limit Exceeded -> unsolved
+3) Time  Limit Exceeded -> unsolved
     Post-contest: 
         1) Changed when we create competitors in the dictionary, only store state if operation is to change.
            Otherwise, if we want to output only create state if player is not already in dictionary
@@ -12,7 +12,8 @@ Issues faced
            instead of creating the competitor in dictionary first 
 
 TODO
-[] Check if optimizations are enough to get > 57
+[x] Check if optimizations are enough to get > 57 
+    Yes, gets 77. Fails one testcase in Test Set 2/One in Test Set 5, Wtf.
 """
 
 import bisect
